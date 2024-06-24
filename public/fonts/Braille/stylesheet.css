@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'Apple Braille';
+    src: url('AppleBraille.woff2') format('woff2'),
+        url('AppleBraille.woff') format('woff'),
+        url('AppleBraille.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Apple Braille Outline 8 Dot';
+    src: url('AppleBraille-Outline8Dot.woff2') format('woff2'),
+        url('AppleBraille-Outline8Dot.woff') format('woff'),
+        url('AppleBraille-Outline8Dot.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Apple Braille Pinpoint 8 Dot';
+    src: url('AppleBraille-Pinpoint8Dot.woff2') format('woff2'),
+        url('AppleBraille-Pinpoint8Dot.woff') format('woff'),
+        url('AppleBraille-Pinpoint8Dot.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Apple Braille Outline 6 Dot';
+    src: url('AppleBraille-Outline6Dot.woff2') format('woff2'),
+        url('AppleBraille-Outline6Dot.woff') format('woff'),
+        url('AppleBraille-Outline6Dot.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Apple Braille Pinpoint 6 Dot';
+    src: url('AppleBraille-Pinpoint6Dot.woff2') format('woff2'),
+        url('AppleBraille-Pinpoint6Dot.woff') format('woff'),
+        url('AppleBraille-Pinpoint6Dot.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
