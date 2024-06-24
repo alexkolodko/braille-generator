@@ -357,20 +357,7 @@ export default {
 </script>
 
 <style scoped>
-#iptBraille {
-  font-family: "Road UI", "Apple Braille";
-  color: black;
-  /* font-size: 2.5em; */
-  /* word-wrap: break-word; */
-  /* overflow-wrap: break-word; */
-  cursor: pointer;
-}
 
-/* @media (max-width: 768px) {
-  #iptBraille {
-    font-size: 1.5em;
-  }
-} */
 </style>
 
 
