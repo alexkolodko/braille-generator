@@ -1,5 +1,13 @@
 # braille-app
 
+Based on:
+
+* jsPDF
+* svg2pdf.js
+* [BrailleToSVG](https://zwettekop.github.io/BrailleToSVG/)
+
+
+
 ## Project setup
 ```
 npm install
@@ -20,5 +28,3 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
