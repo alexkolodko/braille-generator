@@ -6,36 +6,55 @@
     </div>
     <div class="block">
       <label for="iptText">Текст:</label>
-      <textarea class="textarea is-medium" id="iptText" v-model="textInput" @input="generateBrailleText" placeholder="Введіть текст…"></textarea>
+      <div class="textarea-container">
+        <textarea class="textarea is-medium" id="iptText" v-model="textInput" @input="generateBrailleText" placeholder="Введіть текст…"></textarea>
+        <button class="button is-small mini-button" @click="eraseTextarea" title="Очистити текст">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+            </svg>
+          </span>
+        </button>
+      </div>
     </div>
-    <div class="block">
+    <div class="block ">
       <label for="iptBraille">Текст Брайлем (Unicode):</label>
-      <textarea class="textarea is-medium" id="iptBraille" v-model="brailleOutput" @click="copyToClipboard" :title="tooltipText" readonly placeholder="Введіть текст…"></textarea>
+      <div class="textarea-container">
+        <textarea class="textarea is-medium" id="iptBraille" v-model="brailleOutput" :title="tooltipText" readonly></textarea>
+        <button class="button is-small mini-button" @click="copyToClipboard" :title="tooltipText">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16">
+              <path d="M433.941 65.941l-51.882-51.882A48 48 0 0 0 348.118 0H176c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48v-48h80c26.51 0 48-21.49 48-48V99.882a48 48 0 0 0-14.059-33.941zM266 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h74v224c0 26.51 21.49 48 48 48h96v42a6 6 0 0 1-6 6zm128-96H182a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h106v88c0 13.255 10.745 24 24 24h88v202a6 6 0 0 1-6 6zm6-256h-64V48h9.632c1.591 0 3.117.632 4.243 1.757l48.368 48.368a6 6 0 0 1 1.757 4.243V112z"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+      <!-- <textarea class="textarea is-medium" id="iptBraille" v-model="brailleOutput" @click="copyToClipboard" :title="tooltipText" readonly></textarea> -->
       <!-- <button class="button is-small">Шрифт</button> -->
       <!-- <div
         id="iptBraille"
         class="braille-output"
-        v-text="brailleOutput"
+        v-html="brailleOutput"
         @click="copyToClipboard"
         :title="tooltipText"
       ></div> -->
     </div>
-    <div class="block" > <!-- v-if="textInput.trim() && svgWidth > 0" -->
-      <div class="block">
-        <p v-if="textInput.length > 0">У векторі. Фізичний розмір: <b>{{ this.svgWidth }}×{{ this.svgHeight }} мм</b></p>
-      </div>
-      <div class="block">
+    <div class="block"> <!-- v-if="textInput.trim() && svgWidth > 0" -->
+      <label>
+        У векторі. Фізичний розмір: <span v-if="textInput.length > 0"><b>{{ this.svgWidth }}×{{ this.svgHeight }} мм</b></span><span v-else>…</span>
+      </label>
+      <div class="block box svgPreviewbox">
         <svg
         id="svgBraille"
         :innerHTML="svgContent"
-        :width="(textInput.length > 20 || isMobile) ? '100%' : svgWidth * scale"
-        :height="svgHeight * (isMobile ? '100%' : scale)"
+        :width="svgWidth * scale"
+        :height="svgHeight * scale"
         :viewBox="`0 0 ${svgWidth} ${svgHeight}`"
         ></svg>
       </div>
       <div class="buttons">
-        <button class="button is-warning" @click="downloadSvg" :disabled="!textInput.trim()">Завантажити SVG</button>
-        <button class="button is-warning" @click="downloadPdf" :disabled="!textInput.trim()">Завантажити PDF</button>
+        <button class="button is-warning" :class="{ 'is-fullwidth': isMobile }" @click="downloadSvg" :disabled="!textInput.trim()">Завантажити SVG</button>
+        <button class="button is-warning" :class="{ 'is-fullwidth': isMobile }" @click="downloadPdf" :disabled="!textInput.trim()">Завантажити PDF</button>
       </div>
     </div>
   </div>
@@ -58,7 +77,7 @@ export default {
       svgPadding: 0,
       svgXStart: 0,
       svgYStart: 0,
-      scale: 10,
+      scale: 5.67, // 1.5 mm in pixels (assuming 96 DPI)
       isMobile: false,
       dotSpacing: 2.5,
       letterSpacing: 7,
@@ -181,7 +200,7 @@ export default {
         "р": "⠗",
         "с": "⠎",
         "т": "⠞",
-        "у": "⠥",
+        "у": "���",
         "ф": "⠋",
         "х": "⠓",
         "ц": "⠉",
@@ -200,9 +219,39 @@ export default {
       ],
       selectedDotStyleIndex: 0, // Index of the currently selected dot style
       tooltipText: 'Клацніть, щоб скопіювати',
+      storageKey: 'brailleConverterTextInput',
     };
   },
+  created() {
+    // Load text input from localStorage if available
+    const savedTextInput = localStorage.getItem(this.storageKey);
+    if (savedTextInput) {
+      this.textInput = savedTextInput;
+    } else {
+      this.textInput = this.$route.query.textInput || "";
+    }
+    this.generateBrailleText();
+  },
+  watch: {
+    textInput: {
+      handler(newValue) {
+        // Save text input to localStorage whenever it changes
+        localStorage.setItem(this.storageKey, newValue);
+        if (newValue) {
+          this.$router.push({ path: "/", query: { textInput: newValue } });
+        } else {
+          this.$router.push({ path: "/" });
+        }
+      },
+      deep: true
+    },
+    '$route.query.textInput'(newTextInput) {
+      this.textInput = newTextInput || "";
+      this.generateBrailleText();
+    },
+  },
   mounted() {
+
     this.shapeMarginRight = 0;
     this.shapeMarginBottom = 0;
     this.svgXStart = this.dotSize; 
@@ -352,6 +401,10 @@ export default {
         }, 2000);
       });
     },
+    eraseTextarea() {
+      this.textInput = '';
+      this.generateBrailleText();
+    },
   },
 };
 </script>
@@ -359,6 +412,8 @@ export default {
 <style scoped>
 
 </style>
+
+
 
 
 
