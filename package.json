@@ -11,6 +11,8 @@
   "dependencies": {
     "bootstrap": "^5.3.3",
     "bulma": "^1.0.1",
+    "clipboard": "^2.0.11",
+    "clipboard.js": "^1.0.1",
     "core-js": "^3.8.3",
     "ftp-deploy": "^2.4.7",
     "jspdf": "^2.5.1",

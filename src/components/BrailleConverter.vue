@@ -2,7 +2,7 @@
 <section class="section">
 <div class="container">
     <div class="block">
-      <h1 class="is-size-3 has-text-weight-bold">Брайль <sup>β</sup></h1>
+      <h1 class="is-size-4 has-text-weight-bold">Брайль <sup>β</sup></h1>
     </div>
     <div class="block">
       <label for="iptText">Текст:</label>
@@ -65,6 +65,7 @@
 // SVG 2 PDF converter
 import { jsPDF } from 'jspdf';
 import 'svg2pdf.js';
+// import 'clipboard/dist/clipboard.min.js';
 
 export default {
   data() {
@@ -89,42 +90,58 @@ export default {
         " ": " ",
         "\n": "\n",
         "⠁": "1",
+        "⠂": "2",
+        "⠄": "3",
+        "⠈": "4",
+        "⠐": "5",
+        "⠠": "6",
         "⠃": "12",
-        "⠉": "14",
-        "⠙": "145",
-        "⠑": "15",
-        "⠋": "124",
-        "⠛": "1245",
-        "⠓": "125",
-        "⠊": "24",
-        "⠚": "245",
         "⠅": "13",
+        "⠉": "14",
+        "⠑": "15",
+        "⠡": "16",
         "⠇": "123",
         "⠍": "134",
-        "⠝": "1345",
         "⠕": "135",
-        "⠏": "1234",
+        "⠥": "136",
+        "⠙": "145",
+        "⠋": "124",
+        "⠓": "125",
+        "⠚": "245",
+        "⠞": "2345",
         "⠟": "12345",
+        "⠏": "1234",
         "⠗": "1235",
         "⠎": "234",
-        "⠞": "2345",
-        "⠥": "136",
-        "⠧": "1236",
-        "⠺": "2456",
-        "⠭": "1346",
+        "⠝": "1345",
+        "⠛": "1245",
+        "⠷": "12456",
+        "⠮": "2346",
+        "⠼": "3456",
+        "⠘": "45",
+        "⠤": "36",
+        "⠔": "35",
+        "⠢": "26",
+        "⠒": "25",
+        "⠊": "24",
+        "⠌": "34",
+        "⠴": "356",
+        "⠲": "256",
+        "⠖": "235",
+        "⠦": "236",
+        "⠆": "23",
+        "⠜": "345",
+        "⠱": "156",
+        "⠳": "1256",
+        "⠻": "12456",
         "⠽": "13456",
         "⠵": "1356",
-        "⠼": "3456",
-        "⠂": "2",
-        "⠒": "25",
-        "⠲": "256",
-        "⠦": "236",
-        "⠖": "235",
-        "⠐⠣": "5 126",
-        "⠐⠜": "5 345",
-        "⠸⠌": "456 34",
-        "⠸⠡": "456 16",
-        "⠤": "36",
+        "⠯": "1246",
+        "⠿": "123456",
+        "⠾": "23456",
+        "⠩": "3456",
+        "⠺": "2456",
+        "⠫": "1246"
       },
       textToBraille: {
         " ": " ",
@@ -166,31 +183,48 @@ export default {
         "8": "⠓",
         "9": "⠊",
         "0": "⠚",
+        // Punctuation        
         ",": "⠂",
-        ":": "⠒",
         ".": "⠲",
-        "?": "⠦",
+        ":": "⠒",
         "!": "⠖",
-        "(": "⠐⠣",
-        ")": "⠐⠜",
-        "/": "⠸⠌",
-        "": "⠸⠡",
+        "?": "⠢",
+        ";": "⠆",
         "-": "⠤",
+        "–": "⠤",
+        "—": "⠤",
+        "−": "⠤",
+        "+": "⠖",
+        "÷": "⠲",
+        "×": "⠌",
+        "«": "⠦",
+        "»": "⠴",
+        "“": "⠦",
+        "”": "⠴",
+        "(": "⠶",
+        ")": "⠶",
+        "*": "⠔",
+        "=": "⠶",
+        "/": "⠌",
+        "@": "⠩",
+        "№": "⠝",
+        "<": "⠪",
+        ">": "⠕",
         // Ukrainian characters
         "а": "⠁",
         "б": "⠃",
-        "в": "⠉",
+        "в": "⠺",
         "г": "⠛",
-        "ґ": "⠛",
+        "ґ": "⠻",
         "д": "⠙",
         "е": "⠑",
-        "є": "⠑",
+        "є": "⠜",
         "ж": "⠚",
         "з": "⠵",
         "и": "⠊",
-        "і": "⠊",
-        "ї": "⠚",
-        "й": "⠚",
+        "і": "⠽",
+        "ї": "⠹",
+        "й": "⠯",
         "к": "⠅",
         "л": "⠇",
         "м": "⠍",
@@ -200,16 +234,16 @@ export default {
         "р": "⠗",
         "с": "⠎",
         "т": "⠞",
-        "у": "���",
+        "у": "⠥",
         "ф": "⠋",
         "х": "⠓",
         "ц": "⠉",
         "ч": "⠟",
         "ш": "⠱",
-        "щ": "⠱",
-        "ь": "⠹",
-        "ю": "⠽",
-        "я": "⠷",
+        "щ": "⠭",
+        "ь": "⠾",
+        "ю": "⠳",
+        "я": "⠫",
       },
       dotStyles: [
         "fill: black;",
@@ -271,12 +305,23 @@ export default {
       let result = "";
       let isPreviousCharDigit = false;
 
-      for (let char of input) {
-        if (/\d/.test(char)) {
-          if (!isPreviousCharDigit) {
-            result += "⠼"; // Add Braille number sign before the first digit in a group
-          }
-          isPreviousCharDigit = true;
+      for (let i = 0; i < input.length; i++) {
+        let char = input[i];
+        
+        // Convert double quotes to open and close quotes
+        if (char === '"') {
+            if (i === input.length - 1) {
+                result += "⠴"; // Close quote if it's at the end of the text
+            } else if (i === 0 || input[i - 1] !== '"') {
+                result += "⠦"; // Open quote
+            } else {
+                result += "⠴"; // Close quote
+            }
+        } else if (/\d/.test(char)) {
+            if (!isPreviousCharDigit) {
+                result += "⠼"; // Add Braille number sign before the first digit in a group
+            }
+            isPreviousCharDigit = true;
         } else {
           isPreviousCharDigit = false;
         }
@@ -357,7 +402,7 @@ export default {
         { type: "image/svg+xml" }
       );
       const element = document.createElement("a");
-      element.download = this.textInput.replace(/\s/g, "") + "-braille.svg";
+      element.download = this.textInput.replace(/\s/g, "") + "-braille-" + this.svgWidth + "x" + this.svgHeight + ".svg";
       element.href = window.URL.createObjectURL(blob);
       element.click();
       element.remove();
