@@ -30,7 +30,6 @@
         </button>
       </div>
       <!-- <textarea class="textarea is-medium" id="iptBraille" v-model="brailleOutput" @click="copyToClipboard" :title="tooltipText" readonly></textarea> -->
-      <!-- <button class="button is-small">Шрифт</button> -->
       <!-- <div
         id="iptBraille"
         class="braille-output"
@@ -40,9 +39,21 @@
       ></div> -->
     </div>
     <div class="block"> <!-- v-if="textInput.trim() && svgWidth > 0" -->
-      <label>
-        У векторі. Фізичний розмір: <span v-if="textInput.length > 0"><b>{{ this.svgWidth }}×{{ this.svgHeight }} мм</b></span><span v-else>…</span>
-      </label>
+      <div class="mb-1">
+        У векторі. Фізичний розмір: <span v-if="textInput.length > 0"><b>{{ this.svgWidth }}×{{ this.svgHeight }} мм</b></span><span v-else>…</span>. Діаметр: <b>{{this.dotSize * 2}} мм</b>, відстань між точками: <b>{{this.dotSpacing}} мм</b>, між символами <b>{{this.letterSpacing}} мм</b>, між рядків <b>{{this.lineSpacing}} мм</b>.
+        <label class="checkbox ml-2">
+          <input  type="checkbox" 
+                  v-model="addPadding"
+                  />
+          + {{this.svgPadding6}} мм відступ
+        </label>
+        <!-- <label class="checkbox ml-2">
+          <input  type="checkbox" 
+                  v-model="addStarter"
+                  />
+          + D
+        </label> -->
+      </div>
       <div class="block box svgPreviewbox">
         <svg
         id="svgBraille"
@@ -50,6 +61,7 @@
         :width="svgWidth * scale"
         :height="svgHeight * scale"
         :viewBox="`0 0 ${svgWidth} ${svgHeight}`"
+        :style="{ border: addPadding ? '1px lightgrey dashed' : '' }"
         ></svg>
       </div>
       <div class="buttons">
@@ -76,6 +88,7 @@ export default {
       svgWidth: 0, // Initial width
       svgHeight: 0, // Initial height
       svgPadding: 0,
+      svgPadding6: 6,
       svgXStart: 0,
       svgYStart: 0,
       scale: 5.67, // 1.5 mm in pixels (assuming 96 DPI)
@@ -254,6 +267,8 @@ export default {
       selectedDotStyleIndex: 0, // Index of the currently selected dot style
       tooltipText: 'Клацніть, щоб скопіювати',
       storageKey: 'brailleConverterTextInput',
+      addPadding: false,
+      addStarter: false,
     };
   },
   created() {
@@ -298,6 +313,10 @@ export default {
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.checkMobile);
+  },
+  updated(){
+    this.svgPadding = this.addPadding ? this.svgPadding6 : 0;
+    this.generateSvg();
   },
   methods: {
     generateBrailleText() {
@@ -393,7 +412,7 @@ export default {
       }
       maxWidth = Math.max(maxWidth, currentWidth);
       currentHeight += this.lineSpacing;
-      this.svgWidth = maxWidth + (this.svgPadding) - (this.dotSpacing + this.dotSize/2);
+      this.svgWidth = maxWidth + (this.svgPadding*2) - (this.dotSpacing + this.dotSize/2);
       this.svgHeight = currentHeight + (this.svgPadding*2) - (this.lineSpacing - ( (this.dotSpacing*2) + (this.dotSize*2) ));
     },
     downloadSvg() {
