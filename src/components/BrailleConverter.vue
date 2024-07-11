@@ -1,8 +1,16 @@
 <template>
 <section class="section">
 <div class="container">
-    <div class="block">
-      <h1 class="is-size-4 has-text-weight-bold">Брайль <sup>β</sup></h1>
+    <div class="block" style="display: flex; align-items: center;">
+      <h1 class="is-size-4 has-text-weight-bold" style="flex: 1;">Брайль <sup>β</sup></h1>
+      <div class="menu" style="display: flex; align-items: center; gap: 20px;">
+        <!-- <div>
+          <a href="/">Генератор</a>
+        </div> -->
+        <div>
+          <a href="https://blog.alexkolodko.com/all/braille-generator/" target="_blank">Про проєкт ↗</a>
+        </div>
+      </div>
     </div>
     <div class="block">
       <label for="iptText">Текст:</label>
