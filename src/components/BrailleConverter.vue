@@ -338,13 +338,13 @@ export default {
   },
   methods: {
     generateBrailleText() {
-      let input = this.textInput.toLowerCase();
-      let result = "";
-      let isPreviousCharDigit = false;
+    let input = this.textInput;
+    let result = "";
+    let isPreviousCharDigit = false;
 
-      for (let i = 0; i < input.length; i++) {
+    for (let i = 0; i < input.length; i++) {
         let char = input[i];
-        
+
         // Convert double quotes to open and close quotes
         if (char === '"') {
             if (i === input.length - 1) {
@@ -360,15 +360,23 @@ export default {
             }
             isPreviousCharDigit = true;
         } else {
-          isPreviousCharDigit = false;
+            isPreviousCharDigit = false;
         }
 
         if (char === "\n") {
-          result += "\n"; // Preserve newline characters
-        } else if (Object.prototype.hasOwnProperty.call(this.textToBraille, char)) {
-          result += this.textToBraille[char];
+            result += "\n"; // Preserve newline characters
+        } else {
+            if (char >= 'A' && char <= 'Z' || (char >= 'А' && char <= 'Я' || char === 'І' || char === 'Ї' || char === 'Є' || char === 'Ґ')) {
+                result += "⠘"; // Prefix for uppercase letter
+                char = char.toLowerCase(); // Convert to lowercase for the braille dictionary lookup
+            }
+
+            if (Object.prototype.hasOwnProperty.call(this.textToBraille, char)) {
+                result += this.textToBraille[char];
+            }
         }
-      }
+    }
+
 
       this.brailleOutput = result;
       this.generateSvg();
