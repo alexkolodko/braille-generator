@@ -338,7 +338,7 @@ export default {
   },
   methods: {
     generateBrailleText() {
-      let input = this.textInput;
+      let input = this.textInput.toLowerCase();
       let result = "";
       let isPreviousCharDigit = false;
 
@@ -365,12 +365,8 @@ export default {
 
         if (char === "\n") {
           result += "\n"; // Preserve newline characters
-        } else if (Object.prototype.hasOwnProperty.call(this.textToBraille, char.toLowerCase())) {
-          if (char === char.toUpperCase()) {
-            result += "⠘" + this.textToBraille[char.toLowerCase()]; // Use braille symbol for lowercase and add ⠘ before it for uppercase
-          } else {
-            result += this.textToBraille[char.toLowerCase()];
-          }
+        } else if (Object.prototype.hasOwnProperty.call(this.textToBraille, char)) {
+          result += this.textToBraille[char];
         }
       }
 
