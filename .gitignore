@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /dist
-
+ftp-deploy.js
+ftp-deploy
 
 # local env files
 .env.local
