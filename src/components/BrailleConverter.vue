@@ -79,6 +79,9 @@
     </div>
   </div>
 </section>
+<footer>
+    <p class="build-num"><a href="https://github.com/alexkolodko/braille-generator" target="_blank">Проєкт на Github</a> · Версія: {{ buildNumber }}</p>
+  </footer>
 </template>
 
 <script>
@@ -287,6 +290,7 @@ export default {
       storageKey: 'brailleConverterTextInput',
       addPadding: false,
       addStarter: false,
+      buildNumber: process.env.VUE_APP_BUILD_NUMBER,
     };
   },
   created() {
@@ -338,49 +342,48 @@ export default {
   },
   methods: {
     generateBrailleText() {
-    let input = this.textInput;
-    let result = "";
-    let isPreviousCharDigit = false;
+      let input = this.textInput;
+      let result = "";
+      let isPreviousCharDigit = false;
 
-    for (let i = 0; i < input.length; i++) {
-        let char = input[i];
+      for (let i = 0; i < input.length; i++) {
+          let char = input[i];
 
-        // Convert double quotes to open and close quotes
-        if (char === '"') {
-            if (i === input.length - 1) {
-                result += "⠴"; // Close quote if it's at the end of the text
-            } else if (i === 0 || input[i - 1] !== '"') {
-                result += "⠦"; // Open quote
-            } else {
-                result += "⠴"; // Close quote
-            }
-        } else if (/\d/.test(char)) {
-            if (!isPreviousCharDigit) {
-                result += "⠼"; // Add Braille number sign before the first digit in a group
-            }
-            isPreviousCharDigit = true;
-        } else {
-            isPreviousCharDigit = false;
-        }
+          // Convert double quotes to open and close quotes
+          if (char === '"') {
+              if (i === input.length - 1) {
+                  result += "⠴"; // Close quote if it's at the end of the text
+              } else if (i === 0 || input[i - 1] !== '"') {
+                  result += "⠦"; // Open quote
+              } else {
+                  result += "⠴"; // Close quote
+              }
+          } else if (/\d/.test(char)) {
+              if (!isPreviousCharDigit) {
+                  result += "⠼"; // Add Braille number sign before the first digit in a group
+              }
+              isPreviousCharDigit = true;
+          } else {
+              isPreviousCharDigit = false;
+          }
 
-        if (char === "\n") {
-            result += "\n"; // Preserve newline characters
-        } else {
-            if (char >= 'A' && char <= 'Z' || (char >= 'А' && char <= 'Я' || char === 'І' || char === 'Ї' || char === 'Є' || char === 'Ґ')) {
-                result += "⠘"; // Prefix for uppercase letter
-                char = char.toLowerCase(); // Convert to lowercase for the braille dictionary lookup
-            }
+          if (char === "\n") {
+              result += "\n"; // Preserve newline characters
+          } else {
+              if (char >= 'A' && char <= 'Z' || (char >= 'А' && char <= 'Я' || char === 'І' || char === 'Ї' || char === 'Є' || char === 'Ґ')) {
+                  result += "⠘"; // Prefix for uppercase letter
+                  char = char.toLowerCase(); // Convert to lowercase for the braille dictionary lookup
+              }
 
-            if (Object.prototype.hasOwnProperty.call(this.textToBraille, char)) {
-                result += this.textToBraille[char];
-            }
-        }
-    }
-
-
+              if (Object.prototype.hasOwnProperty.call(this.textToBraille, char)) {
+                  result += this.textToBraille[char];
+              }
+          }
+      }
       this.brailleOutput = result;
       this.generateSvg();
     },
+
     generateSvg() {
       let input = this.brailleOutput;
       let result = "";
@@ -500,7 +503,12 @@ export default {
 </script>
 
 <style scoped>
-
+.build-num {
+  font-size: 0.7em;
+  position: absolute;
+  right: 1em;
+  bottom: 1em;
+}
 </style>
 
 
