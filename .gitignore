@@ -2,7 +2,7 @@
 node_modules
 /dist
 ftp-deploy.js
-ftp-deploy
+*ftp-deploy*
 
 # local env files
 .env.local
