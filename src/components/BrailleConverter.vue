@@ -291,6 +291,7 @@ export default {
       addPadding: false,
       addStarter: false,
       buildNumber: process.env.VUE_APP_BUILD_NUMBER,
+      buildDate: process.env.VUE_APP_BUILD_DATE,
     };
   },
   created() {

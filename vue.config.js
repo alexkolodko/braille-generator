@@ -6,7 +6,8 @@ module.exports = defineConfig({
   configureWebpack: {
     plugins: [
       new webpack.DefinePlugin({
-        'process.env.VUE_APP_BUILD_NUMBER': JSON.stringify(process.env.VUE_APP_BUILD_NUMBER)
+        'process.env.VUE_APP_BUILD_NUMBER': JSON.stringify(process.env.VUE_APP_BUILD_NUMBER),
+        'process.env.VUE_APP_BUILD_DATE': JSON.stringify(process.env.VUE_APP_BUILD_DATE),
       })
     ]
   }
