@@ -453,12 +453,14 @@ export default {
       this.svgHeight = currentHeight + (this.svgPadding*2) - (this.lineSpacing - ( (this.dotSpacing*2) + (this.dotSize*2) ));
     },
     downloadSvg() {
+      const scaledWidth = this.svgWidth * (this.scale / 2); // Use scale variable
+      const scaledHeight = this.svgHeight * (this.scale / 2); // Use scale variable
       const blob = new Blob(
-        [`<svg xmlns="http://www.w3.org/2000/svg" width="${this.svgWidth}" height="${this.svgHeight}">${this.svgContent}</svg>`],
+        [`<svg xmlns="http://www.w3.org/2000/svg" width="${scaledWidth}" height="${scaledHeight}" viewBox="0 0 ${this.svgWidth} ${this.svgHeight}">${this.svgContent}</svg>`],
         { type: "image/svg+xml" }
       );
       const element = document.createElement("a");
-      element.download = this.textInput.replace(/\s/g, "") + "-braille-" + this.svgWidth + "x" + this.svgHeight + ".svg";
+      element.download = this.textInput.replace(/\s/g, "") + "-braille-" + this.svgWidth + "x" + this.svgHeight + ".svg"; // Update filename
       element.href = window.URL.createObjectURL(blob);
       element.click();
       element.remove();
