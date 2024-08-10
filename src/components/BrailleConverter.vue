@@ -180,7 +180,7 @@ export default {
       textToBraille: {
         " ": " ",
         "\n": "\n",
-        "a": "",
+        "a": "⠁",
         "b": "⠃",
         "c": "⠉",
         "d": "⠙",
