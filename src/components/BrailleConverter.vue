@@ -80,7 +80,7 @@
   </div>
 </section>
 <footer>
-    <p class="build-num"><a href="https://github.com/alexkolodko/braille-generator" target="_blank">Проєкт на Github</a> · Версія: {{ buildNumber }}</p>
+    <p class="build-num"><a href="https://github.com/alexkolodko/braille-generator" target="_blank">Проєкт на Github</a> · Версія: {{ buildNumber }}, {{ buildDate }}</p>
   </footer>
 </template>
 
